@@ -52,7 +52,7 @@
   URL="https://github.com/usecloudstate/cli/releases/download/v1.0.1/cloudstate-cli-\$OS-\$ARCH"
 
   echo "Installing CLI from \$URL"
-  if [ \$(command -v curlf) ]; then
+  if [ \$(command -v curl) ]; then
     curl -L "\$URL" --output cli
   else
     wget -O- "\$URL" > cli
