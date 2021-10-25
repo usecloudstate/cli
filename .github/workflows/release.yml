@@ -17,18 +17,11 @@ jobs:
       - name: Build
         run: |
           make build
-      - name: "Build Changelog"
-        id: build_changelog
-        uses: mikepenz/release-changelog-builder-action@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          commitMode: true
+          node-version: "lts/*"
+      - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create Release
-        uses: actions/create-release@v1
-        with:
-          tag_name: v${{ github.run_number }}
-          release_name: v${{ github.run_number }}
-          body: ${{steps.github_release.outputs.changelog}}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: make setup_semantic_release && npx semantic-release
