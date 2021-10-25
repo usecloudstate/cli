@@ -22,6 +22,13 @@ jobs:
           add: "bin/cli"
           author_name: Commit Bot
           author_email: contact@usecloudstate.io
-          commit_message: "Release v${{ env.GITHUB_RUN_NUMBER }}"
-          tag_name: "v${{ env.GITHUB_RUN_NUMBER }}"
-          tag_message: "Release v${{ env.GITHUB_RUN_NUMBER }}"
+          message: "Release v${{ github.run_number }}"
+          push: true
+          tag: "v${{ github.run_number }}"
+      - name: Publish Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "v${{ github.run_number }}"
+          files: |
+            bin/cli
