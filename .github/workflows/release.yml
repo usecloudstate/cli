@@ -1,11 +1,11 @@
-name: Release
 on:
   push:
     branches:
       - main
+
 jobs:
   release:
-    name: Release
+    name: Build and test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,25 +15,20 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
       - name: Build
-        run: make build
-      - name: Commit and tag
-        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        run: |
+          make build
+      - name: "Build Changelog"
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v2
         with:
-          add: "bin/cli"
-          author_name: Commit Bot
-          author_email: contact@usecloudstate.io
-          message: "Release v${{ github.run_number }}"
-          push: true
-          tag: "v${{ github.run_number }}"
-      - name: Publish Release
-        uses: "marvinpinto/action-automatic-releases@latest"
+          commitMode: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        uses: actions/create-release@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "v${{ github.run_number }}"
-          files: |
-            bin/cli
-      - name: Publish to homebrew tap
-        uses: izumin5210/action-homebrew-tap@latest
-        with:
-          tap: usecloudstate/homebrew-cli
-          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: v${{ github.run_number }}
+          release_name: v${{ github.run_number }}
+          body: ${{steps.github_release.outputs.changelog}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
