@@ -1,0 +1,27 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Go
+        uses: actions/setup-go@v2
+      - name: Build
+        run: make build
+      - name: Commit and tag
+        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        with:
+          add: "bin/cli"
+          author_name: Commit Bot
+          author_email: contact@usecloudstate.io
+          commit_message: "Release v${{ env.GITHUB_RUN_NUMBER }}"
+          tag_name: "v${{ env.GITHUB_RUN_NUMBER }}"
+          tag_message: "Release v${{ env.GITHUB_RUN_NUMBER }}"

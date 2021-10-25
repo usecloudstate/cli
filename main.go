@@ -88,7 +88,7 @@ func main() {
 		switch sig {
 		case os.Interrupt:
 		case syscall.SIGTERM:
-			log.Println("❌ Exiting...")
+			log.Println("Exiting...")
 			os.Exit(1)
 		}
 	}()
