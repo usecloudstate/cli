@@ -13,7 +13,7 @@ type Client struct {
 }
 
 var (
-	rootApp = "http://localhost:8080"
+	rootApp = "https://api.usecloudstate.io"
 )
 
 func Init() *Client {
