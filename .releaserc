@@ -3,12 +3,32 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "docs/CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "CLI_VERSION=${nextRelease.version} make update_install_script_version"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "docs/CHANGELOG.md",
+          "bin/*"
+        ]
+      }
+    ],
+    [
       "@semantic-release/github",
       {
         "assets": "bin/*"
       }
-    ],
-    "@semantic-release/changelog"
+    ]
   ],
   "branches": [
     "main"
