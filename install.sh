@@ -33,7 +33,7 @@
 
   ARCH="\$(uname -m)"
   if [ "\$ARCH" == "x86_64" ]; then
-    ARCH=x64
+    ARCH=amd64
   elif [[ "\$ARCH" == aarch* ]]; then
     ARCH=arm
   else
@@ -45,27 +45,25 @@
   cd /usr/local/lib
   rm -rf cloudstate
   rm -rf ~/.local/share/cloudstate/client
-  if [ \$(command -v xz) ]; then
-    URL=https://cli-assets.cloudstate.com/cloudstate-\$OS-\$ARCH.tar.xz
-    TAR_ARGS="xJ"
-  else
-    URL=https://cli-assets.cloudstate.com/cloudstate-\$OS-\$ARCH.tar.gz
-    TAR_ARGS="xz"
-  fi
+
+  mkdir -p cloudstate/bin
+  cd cloudstate/bin
+
+  URL="https://github.com/usecloudstate/cli/releases/download/v1.0.1/cloudstate-cli-\$OS-\$ARCH"
+
   echo "Installing CLI from \$URL"
-  if [ \$(command -v curl) ]; then
-    curl "\$URL" | tar "\$TAR_ARGS"
+  if [ \$(command -v curlf) ]; then
+    curl -L "\$URL" --output cli
   else
-    wget -O- "\$URL" | tar "\$TAR_ARGS"
+    wget -O- "\$URL" > cli
   fi
+  
   # delete old cloudstate bin if exists
   rm -f \$(command -v cloudstate) || true
   rm -f /usr/local/bin/cloudstate
-  ln -s /usr/local/lib/cloudstate/bin/cloudstate /usr/local/bin/cloudstate
+  ln -s /usr/local/lib/cloudstate/bin/cli /usr/local/bin/cloudstate
 
-  # on alpine (and maybe others) the basic node binary does not work
-  # remove our node binary and fall back to whatever node is on the PATH
-  /usr/local/lib/cloudstate/bin/node -v || rm /usr/local/lib/cloudstate/bin/node
+  chmod +x /usr/local/lib/cloudstate/bin/cli
 
 SCRIPT
   # test the CLI

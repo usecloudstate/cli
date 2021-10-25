@@ -3,8 +3,6 @@ package main
 import (
 	"log"
 	"os"
-	"os/signal"
-	"syscall"
 
 	"github.com/usecloudstate/cli/pkg/apps"
 	"github.com/usecloudstate/cli/pkg/client"
@@ -80,18 +78,10 @@ func next(s State, ctx StateMachineCtx) {
 }
 
 func main() {
-	signalChannel := make(chan os.Signal, 2)
-	signal.Notify(signalChannel, os.Interrupt, syscall.SIGTERM)
-
-	go func() {
-		sig := <-signalChannel
-		switch sig {
-		case os.Interrupt:
-		case syscall.SIGTERM:
-			log.Println("Exiting...")
-			os.Exit(1)
-		}
-	}()
+	log.Println("=================================================================")
+	log.Println("🚀 Starting Cloudstate CLI")
+	log.Println("Please report any issues at: https://github.com/usecloudstate/cli")
+	log.Println("=================================================================")
 
 	ctx := StateMachineCtx{}
 	next(SInit, ctx)
