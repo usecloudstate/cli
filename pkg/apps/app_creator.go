@@ -29,6 +29,8 @@ func Init(client *client.Client) *AppCreator {
 }
 
 func (a *AppCreator) CreateNewApp() (*App, error) {
+	log.Println("Creating a new app...")
+
 	wd, err := os.Getwd()
 
 	if err != nil {

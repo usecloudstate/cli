@@ -64,7 +64,7 @@ func (t *Token) Expired() bool {
 }
 
 func (t *Token) Save() error {
-	if t.user == "" || t.pass == "" {
+	if t == nil || t.user == "" || t.pass == "" {
 		return fmt.Errorf("user and pass must be set")
 	}
 
@@ -114,7 +114,7 @@ func Get() (*Token, error) {
 	}, nil
 }
 
-func (t *Token) Remove() error {
+func RemoveMachine() error {
 	home, err := user.Current()
 	if err != nil {
 		return err

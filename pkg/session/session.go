@@ -86,16 +86,6 @@ func Init(client *client.Client) (*Session, error) {
 	return s, nil
 }
 
-func (s *Session) PurgeSession() error {
-	err := s.token.Remove()
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (s *Session) VerifySession() error {
 	// TODO: Implement a auth token verification later on
 	resp, err := s.client.Request("GET", "admin/apps", nil)
