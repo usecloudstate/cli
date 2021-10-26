@@ -110,7 +110,7 @@ func (sesh *Session) requestSession() error {
 
 	log.Println("Sending an e-mail to you...")
 
-	_, err = sesh.client.Request("PUT", "apps/00000000000000000000000000000001/user_session_request", map[string]interface{}{
+	_, err = sesh.client.Request("PUT", "apps/00000000000000000000000000000000/user_session_request", map[string]interface{}{
 		"email":   email,
 		"fromCli": true,
 	})
