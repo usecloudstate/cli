@@ -49,7 +49,7 @@
   mkdir -p cloudstate/bin
   cd cloudstate/bin
 
-  URL="https://github.com/usecloudstate/cli/releases/download/CLI_VERSION/cloudstate-cli-\$OS-\$ARCH"
+  URL="https://github.com/usecloudstate/cli/releases/download/1.0.8/cloudstate-cli-\$OS-\$ARCH"
 
   echo "Installing CLI from \$URL"
   if [ \$(command -v curl) ]; then

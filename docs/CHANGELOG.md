@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/usecloudstate/cli/compare/v1.0.7...v1.0.8) (2021-10-26)
+
+
+### Bug Fixes
+
+* Update install script on new release ([ad4ed5b](https://github.com/usecloudstate/cli/commit/ad4ed5b86ef25865875fd83968ee749641525f05))
+
 ## [1.0.7](https://github.com/usecloudstate/cli/compare/v1.0.6...v1.0.7) (2021-10-26)
 
 
