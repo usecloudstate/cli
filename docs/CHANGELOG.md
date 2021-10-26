@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/usecloudstate/cli/compare/v1.0.6...v1.0.7) (2021-10-26)
+
+
+### Bug Fixes
+
+* Fix the update_install_script_version make cmd ([ab83e51](https://github.com/usecloudstate/cli/commit/ab83e51bc44acfd72d1c8080e21fa978c0334b08))
+
 ## [1.0.6](https://github.com/usecloudstate/cli/compare/v1.0.5...v1.0.6) (2021-10-25)
 
 
