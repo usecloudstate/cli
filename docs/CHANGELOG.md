@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/usecloudstate/cli/compare/v1.0.11...v1.0.12) (2021-10-26)
+
+
+### Bug Fixes
+
+* Fix post setup instructions to consult .env ([28b691b](https://github.com/usecloudstate/cli/commit/28b691b1d5d4c5c87f0b40337c3585f947eb5d14))
+
 ## [1.0.11](https://github.com/usecloudstate/cli/compare/v1.0.10...v1.0.11) (2021-10-26)
 
 
