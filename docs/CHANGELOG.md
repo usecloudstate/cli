@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/usecloudstate/cli/compare/v1.0.8...v1.0.9) (2021-10-26)
+
+
+### Bug Fixes
+
+* Fix the mission version prefix for install script ([b4646f5](https://github.com/usecloudstate/cli/commit/b4646f5a61dd589359300fa24fb7439d81c0eb1c))
+
 ## [1.0.8](https://github.com/usecloudstate/cli/compare/v1.0.7...v1.0.8) (2021-10-26)
 
 
