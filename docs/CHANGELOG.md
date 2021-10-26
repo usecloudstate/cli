@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/usecloudstate/cli/compare/v1.0.9...v1.0.10) (2021-10-26)
+
+
+### Bug Fixes
+
+* Template-ify CLI_VERSION in Makefile ([9dd3521](https://github.com/usecloudstate/cli/commit/9dd352116ec78318ec3ae8b7430ed46a0cbad1a8))
+
 ## [1.0.9](https://github.com/usecloudstate/cli/compare/v1.0.8...v1.0.9) (2021-10-26)
 
 
