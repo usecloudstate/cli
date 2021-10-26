@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/usecloudstate/cli/compare/v1.0.10...v1.0.11) (2021-10-26)
+
+
+### Bug Fixes
+
+* Fix the session request error ([ebdf024](https://github.com/usecloudstate/cli/commit/ebdf024f5164b3229f14cf6d92ab5bcc560a17ca))
+
 ## [1.0.10](https://github.com/usecloudstate/cli/compare/v1.0.9...v1.0.10) (2021-10-26)
 
 
