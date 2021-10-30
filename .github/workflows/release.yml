@@ -17,7 +17,11 @@ jobs:
       - name: Test
         run: |
           make test
+      - name: Setup semantic-release
+        run: make setup_semantic_release
       - name: Build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           make build
       - name: Setup Node.js
@@ -27,4 +31,5 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: make setup_semantic_release && npx semantic-release
+        run: |
+          npx semantic-release
