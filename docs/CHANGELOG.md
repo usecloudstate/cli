@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/usecloudstate/cli/compare/v1.0.12...v1.1.0) (2021-10-30)
+
+
+### Bug Fixes
+
+* Fetch next_ver before building ([4872a5f](https://github.com/usecloudstate/cli/commit/4872a5fc030b202411dee7b3d1a2fc4a315f732c))
+* Validate path to setup ([9d58483](https://github.com/usecloudstate/cli/commit/9d5848388731724d31469d864adde22ef007b3ad))
+
+
+### Features
+
+* CLI with version ([4c14398](https://github.com/usecloudstate/cli/commit/4c143988a53d7226d4e3d85435fc07c67b8cc069))
+
 ## [1.0.12](https://github.com/usecloudstate/cli/compare/v1.0.11...v1.0.12) (2021-10-26)
 
 
