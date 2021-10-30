@@ -101,7 +101,7 @@ PARSE_NETRC:
 
 	if err != nil {
 		log.Println("Error opening your .netrc file.")
-		log.Println("Trying to $ touch ", path)
+		log.Println("Trying to $ touch", path)
 
 		cmd1 := exec.Command("/bin/sh", "-c", fmt.Sprintf("touch %s", path))
 		cmd1.Stdout = os.Stdout
