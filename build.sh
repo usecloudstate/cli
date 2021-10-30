@@ -4,6 +4,8 @@ package_name="cloudstate-cli"
 
 platforms=("windows/amd64" "windows/386" "darwin/amd64" "linux/amd64" "linux/386")
 
+next_ver=$(npx semantic-release --dryRun | grep -oP 'Published release \K.*? ')
+
 for platform in "${platforms[@]}"
 do
     platform_split=(${platform//\// })
@@ -14,9 +16,8 @@ do
         output_name+='.exe'
     fi
 
-    next_ver=$(npx semantic-release --dryRun | grep -oP 'Published release \K.*? ')
-
     env GOOS=$GOOS GOARCH=$GOARCH go build -ldflags "-s -w -X main.Version=$next_ver" -o bin/$output_name $package
+
     if [ $? -ne 0 ]; then
         echo 'An error has occurred! Aborting the script execution...'
         exit 1
