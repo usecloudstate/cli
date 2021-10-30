@@ -14,7 +14,9 @@ do
         output_name+='.exe'
     fi
 
-    env GOOS=$GOOS GOARCH=$GOARCH go build -ldflags "-s -w" -o bin/$output_name $package
+    next_ver=$(npx semantic-release --dryRun | grep -oP 'Published release \K.*? ')
+
+    env GOOS=$GOOS GOARCH=$GOARCH go build -ldflags "-s -w -X main.Version=$next_ver" -o bin/$output_name $package
     if [ $? -ne 0 ]; then
         echo 'An error has occurred! Aborting the script execution...'
         exit 1

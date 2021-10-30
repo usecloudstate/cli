@@ -32,6 +32,8 @@ type StateMachineCtx struct {
 	cliArgs []string
 }
 
+var Version string = "Dev"
+
 func next(s State, ctx *StateMachineCtx) {
 	switch s {
 	case SInit:
@@ -84,12 +86,19 @@ func next(s State, ctx *StateMachineCtx) {
 }
 
 func main() {
-	log.Println("🚀 Starting Cloudstate CLI")
-	log.Println("Please report any issues at: https://github.com/usecloudstate/cli")
-	log.Println("")
+	log.SetFlags(0)
+
+	log.Printf("Cloud State CLI (v%s)\n", Version)
 
 	argsWithoutProg := os.Args[1:]
+
+	if len(argsWithoutProg) == 0 {
+		log.Println("usage: $ cloudstate <command>")
+		return
+	}
+
 	cmdVar := argsWithoutProg[0]
+
 	argsWithoutCmd := argsWithoutProg[1:]
 
 	ctx := StateMachineCtx{
