@@ -150,8 +150,7 @@ func createPathIfNotExists(path string) error {
 
 func RunSetup(ac *apps.Apps, path string) error {
 	if path == "" {
-		log.Println("No path provided, using current directory")
-		path = "."
+		return fmt.Errorf("path is required")
 	}
 
 	err := createPathIfNotExists(path)

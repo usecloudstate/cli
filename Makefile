@@ -1,6 +1,9 @@
 run:
 	go run main.go
 
+test:
+	go test
+
 build:
 	./build.sh
 
