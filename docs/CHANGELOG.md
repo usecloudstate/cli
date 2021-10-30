@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/usecloudstate/cli/compare/v1.1.0...v1.1.1) (2021-10-30)
+
+
+### Bug Fixes
+
+* Extra spacing in touch prompt ([9df40d8](https://github.com/usecloudstate/cli/commit/9df40d83b5c199da4a1791ae8dbeece1d0a917c5))
+
 # [1.1.0](https://github.com/usecloudstate/cli/compare/v1.0.12...v1.1.0) (2021-10-30)
 
 
