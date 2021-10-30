@@ -8,4 +8,5 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/jdxcode/netrc v0.0.0-20210204082910-926c7f70242a // indirect
 	github.com/manifoldco/promptui v0.8.0 // indirect
+	github.com/xeonx/timeago v1.0.0-rc4 // indirect
 )

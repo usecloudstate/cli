@@ -19,19 +19,20 @@ const (
 	SSessionFail
 	SSessionSuccess
 	SUnrecoverableError
-	SAppCreated
+	SAppCreateRequested
 	SSetupRequested
 	SSuccess
 )
 
 type StateMachineCtx struct {
-	client *client.Client
-	sesh   *session.Session
-	ac     *apps.AppCreator
-	app    *apps.App
+	client  *client.Client
+	sesh    *session.Session
+	ac      *apps.Apps
+	app     *apps.App
+	cliArgs []string
 }
 
-func next(s State, ctx StateMachineCtx) {
+func next(s State, ctx *StateMachineCtx) {
 	switch s {
 	case SInit:
 		ctx.client = client.Init()
@@ -39,9 +40,12 @@ func next(s State, ctx StateMachineCtx) {
 
 	case SClientInitiated:
 		nsesh, err := session.Init(ctx.client)
+		ac := apps.Init(ctx.client)
 		ctx.sesh = nsesh
+		ctx.ac = ac
 
 		if err != nil {
+			log.Println("Error initiating client:", err)
 			next(SSessionFail, ctx)
 		} else {
 			next(SSessionSuccess, ctx)
@@ -58,31 +62,47 @@ func next(s State, ctx StateMachineCtx) {
 		}
 
 	case SSessionSuccess:
-		ac := apps.Init(ctx.client)
-		app, err := ac.CreateNewApp()
+		next(SSuccess, ctx)
+
+	case SAppCreateRequested:
+		app, err := ctx.ac.CreateNewApp()
 
 		if err != nil {
 			next(SUnrecoverableError, ctx)
 		} else {
 			ctx.app = app
-			ctx.ac = ac
-			next(SAppCreated, ctx)
+			log.Println("💡 Hint to setup your app: $ cloudstate setup <path>")
+			next(SSuccess, ctx)
 		}
 
-	case SAppCreated:
-		setup.PrintSetup(ctx.app.AppId)
+	case SSetupRequested:
+		setup.RunSetup(ctx.ac, ctx.cliArgs[0])
 
 	case SSuccess:
-		os.Exit(0)
+		return
 	}
 }
 
 func main() {
-	log.Println("=================================================================")
 	log.Println("🚀 Starting Cloudstate CLI")
 	log.Println("Please report any issues at: https://github.com/usecloudstate/cli")
-	log.Println("=================================================================")
+	log.Println("")
 
-	ctx := StateMachineCtx{}
-	next(SInit, ctx)
+	argsWithoutProg := os.Args[1:]
+	cmdVar := argsWithoutProg[0]
+	argsWithoutCmd := argsWithoutProg[1:]
+
+	ctx := StateMachineCtx{
+		cliArgs: argsWithoutCmd,
+	}
+	next(SInit, &ctx)
+
+	switch cmdVar {
+	case "create":
+		next(SAppCreateRequested, &ctx)
+	case "setup":
+		next(SSetupRequested, &ctx)
+	default:
+		log.Println("Unknown command:", cmdVar)
+	}
 }

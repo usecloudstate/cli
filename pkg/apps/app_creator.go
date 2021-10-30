@@ -7,28 +7,21 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"time"
 
 	"github.com/manifoldco/promptui"
-	"github.com/usecloudstate/cli/pkg/client"
 )
 
-type AppCreator struct {
-	client *client.Client
-}
-
 type App struct {
-	AppId           string `bson:"appId" json:"appId"`
-	Name            string `bson:"name" json:"name"`
-	Description     string `bson:"description" json:"description"`
-	Origin          string `bson:"origin" json:"origin"`
-	AllowSelfSignup bool   `bson:"allowSelfSignup" json:"allowSelfSignup"`
+	AppId           string    `bson:"appId" json:"appId"`
+	Name            string    `bson:"name" json:"name"`
+	Description     string    `bson:"description" json:"description"`
+	Origin          string    `bson:"origin" json:"origin"`
+	AllowSelfSignup bool      `bson:"allowSelfSignup" json:"allowSelfSignup"`
+	CreatedAt       time.Time `bson:"createdAt" json:"createdAt"`
 }
 
-func Init(client *client.Client) *AppCreator {
-	return &AppCreator{client: client}
-}
-
-func (a *AppCreator) CreateNewApp() (*App, error) {
+func (a *Apps) CreateNewApp() (*App, error) {
 	log.Println("Creating a new app...")
 
 	wd, err := os.Getwd()
@@ -109,7 +102,7 @@ func (a *AppCreator) CreateNewApp() (*App, error) {
 	return a.create(appName, appDesc, origin, pubSignup)
 }
 
-func (a *AppCreator) create(appName string, appDescription string, origin string, publicSignup bool) (*App, error) {
+func (a *Apps) create(appName string, appDescription string, origin string, publicSignup bool) (*App, error) {
 	payload := map[string]interface{}{
 		"name":            appName,
 		"description":     appDescription,
@@ -123,8 +116,6 @@ func (a *AppCreator) create(appName string, appDescription string, origin string
 		return nil, err
 	}
 
-	log.Println(resp.Status)
-
 	defer resp.Body.Close()
 
 	b := App{}
@@ -134,7 +125,12 @@ func (a *AppCreator) create(appName string, appDescription string, origin string
 		return nil, err
 	}
 
-	log.Println(b.AppId)
+	log.Println("✅ Your new app is created.")
+	log.Printf("App ID: %s\n", b.AppId)
+	log.Printf("Name: %s\n", b.Name)
+	log.Printf("Description: %s\n", b.Description)
+	log.Printf("Origin: %s\n", b.Origin)
+	log.Printf("Allow self signup: %t\n", b.AllowSelfSignup)
 
 	return &b, nil
 }

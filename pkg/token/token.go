@@ -3,6 +3,8 @@ package token
 import (
 	"fmt"
 	"log"
+	"os"
+	"os/exec"
 	"os/user"
 	"path/filepath"
 	"time"
@@ -93,13 +95,37 @@ func Get() (*Token, error) {
 	}
 
 	path := filepath.Join(home.HomeDir, ".netrc")
+
+PARSE_NETRC:
 	f, err := netrc.Parse(path)
 
 	if err != nil {
 		log.Println("Error opening your .netrc file.")
-		log.Printf("\t Please make sure a .netrc file exists at %s \n", path)
-		log.Printf("\t $ touch %s # creates a new file", path)
-		return nil, err
+		log.Println("Trying to $ touch ", path)
+
+		cmd1 := exec.Command("/bin/sh", "-c", fmt.Sprintf("touch %s", path))
+		cmd1.Stdout = os.Stdout
+		cmd1.Stderr = os.Stderr
+		err1 := cmd1.Run()
+
+		if err1 != nil {
+			log.Println("Error creating .netrc file.", err1)
+			return nil, err1
+		}
+
+		cmd2 := exec.Command("/bin/sh", "-c", fmt.Sprintf("chmod 600 %s", path))
+		cmd2.Stdout = os.Stdout
+		cmd2.Stderr = os.Stderr
+		err2 := cmd2.Run()
+
+		if err2 != nil {
+			log.Println("Error changing permissions on your .netrc file.")
+			return nil, err2
+		}
+
+		log.Println("Successfully created .netrc file.")
+
+		goto PARSE_NETRC
 	}
 
 	m := f.Machine(machine)

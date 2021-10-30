@@ -40,6 +40,7 @@ func Init(client *client.Client) (*Session, error) {
 	t, err := token.Get()
 
 	if err != nil {
+		log.Println("No existing session found.")
 		return nil, err
 	}
 
